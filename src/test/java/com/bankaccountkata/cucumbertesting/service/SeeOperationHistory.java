@@ -5,8 +5,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.bankaccountkata.cucumbertesting.CucumberDatas;
 import com.bankaccountkata.cucumbertesting.SpringIntegrationTest;
-import com.bankaccountkata.cucumbertesting.wrapper.OperationDtoList;
 import com.bankaccountkata.dto.CustomerOperationDto;
+import com.bankaccountkata.dto.OperationListDto;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -33,11 +33,11 @@ public class SeeOperationHistory extends SpringIntegrationTest {
 
 	@When("the client calls \\/operations\\/...")
 	public void the_client_calls_operations() {
-		OperationDtoList operationDto = new RestTemplate().getForObject(
+		OperationListDto operationDto = new RestTemplate().getForObject(
 				"http://localhost:8080/operations/" + this.cucumberDatas.getCustomerOperationDto().getCustomerName()
 						+ "/" + this.cucumberDatas.getCustomerOperationDto().getCustomerPhone() + "/"
 						+ this.cucumberDatas.getCustomerOperationDto().getAccountType(),
-				OperationDtoList.class);
+				OperationListDto.class);
 		this.cucumberDatas.setOperationList(operationDto.getOperationList());
 	}
 

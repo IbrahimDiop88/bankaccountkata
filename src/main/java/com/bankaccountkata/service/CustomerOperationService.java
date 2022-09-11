@@ -1,7 +1,6 @@
 package com.bankaccountkata.service;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,6 +10,7 @@ import org.springframework.util.Assert;
 
 import com.bankaccountkata.dto.CustomerOperationDto;
 import com.bankaccountkata.dto.OperationDto;
+import com.bankaccountkata.dto.OperationListDto;
 import com.bankaccountkata.entity.Account;
 import com.bankaccountkata.entity.Customer;
 import com.bankaccountkata.entity.Operation;
@@ -55,11 +55,13 @@ public class CustomerOperationService {
 		return OperationMapper.INSTANCE.toDto(operation);
 	}
 
-	public List<OperationDto> searchOperation(String customerName, String customerPhone, String accountType) {
+	public OperationListDto searchOperation(String customerName, String customerPhone, String accountType) {
 		final Customer customer = searchCustomer(customerName, customerPhone);
 		final Account account = searchAccount(customer, accountType);
-		return account.getOperationList().stream().map(opertion -> OperationMapper.INSTANCE.toDto(opertion))
-				.collect(Collectors.toList());
+		OperationListDto operationListDto = new OperationListDto();
+		operationListDto.setOperationList(account.getOperationList().stream().map(opertion -> OperationMapper.INSTANCE.toDto(opertion))
+				.collect(Collectors.toList()));
+		 return operationListDto;
 	}
 
 	private Customer searchCustomer(String name, String phone) {

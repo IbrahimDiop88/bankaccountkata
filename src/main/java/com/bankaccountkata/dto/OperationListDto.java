@@ -1,10 +1,8 @@
-package com.bankaccountkata.cucumbertesting.wrapper;
+package com.bankaccountkata.dto;
 
 import java.util.List;
 
-import com.bankaccountkata.dto.OperationDto;
-
-public class OperationDtoList {
+public class OperationListDto {
 
 	List<OperationDto> operationList;
 

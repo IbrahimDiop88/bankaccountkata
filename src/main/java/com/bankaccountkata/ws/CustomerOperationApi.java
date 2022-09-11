@@ -1,7 +1,6 @@
 package com.bankaccountkata.ws;
 
 import java.rmi.ServerException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bankaccountkata.dto.CustomerOperationDto;
 import com.bankaccountkata.dto.OperationDto;
+import com.bankaccountkata.dto.OperationListDto;
 import com.bankaccountkata.service.CustomerOperationService;
 
 @RestController
@@ -26,9 +26,10 @@ public class CustomerOperationApi {
 	private CustomerOperationService customerOperationService;
 
 	@GetMapping("/{customerName}/{customerPhone}/{accountType}")
-	public List<OperationDto> search(@PathVariable("customerName") String customerName,
+	public ResponseEntity<OperationListDto> search(@PathVariable("customerName") String customerName,
 			@PathVariable("customerPhone") String customerPhone, @PathVariable("accountType") String accountType) {
-		return customerOperationService.searchOperation(customerName, customerPhone, accountType);
+		return new ResponseEntity<>(customerOperationService.searchOperation(customerName, customerPhone, accountType),
+				HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/deposit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
